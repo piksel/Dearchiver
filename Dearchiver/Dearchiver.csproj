@@ -7,11 +7,12 @@
     <ProjectGuid>{7C85E707-C963-4D9F-9A74-044BE0DA6E58}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dearchiver</RootNamespace>
+    <RootNamespace>Piksel.Dearchiver</RootNamespace>
     <AssemblyName>Dearchiver</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AssemblyVersion>1.0.17018.33</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,9 +33,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>dearchiver.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,16 +52,189 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Converters\BooleanConverterYesNo.cs" />
+    <Compile Include="Converters\DecimalConverterPercent.cs" />
+    <Compile Include="ExcerptLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Extractor.cs" />
+    <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSettings.Designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IconExtractor.cs" />
+    <Compile Include="Lib\SharpZipLib\BZip2\BZip2.cs" />
+    <Compile Include="Lib\SharpZipLib\BZip2\BZip2Constants.cs" />
+    <Compile Include="Lib\SharpZipLib\BZip2\BZip2Exception.cs" />
+    <Compile Include="Lib\SharpZipLib\BZip2\BZip2InputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\BZip2\BZip2OutputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\Checksums\Adler32.cs" />
+    <Compile Include="Lib\SharpZipLib\Checksums\CRC32.cs" />
+    <Compile Include="Lib\SharpZipLib\Checksums\IChecksum.cs" />
+    <Compile Include="Lib\SharpZipLib\Checksums\StrangeCRC.cs" />
+    <Compile Include="Lib\SharpZipLib\Core\FileSystemScanner.cs" />
+    <Compile Include="Lib\SharpZipLib\Core\INameTransform.cs" />
+    <Compile Include="Lib\SharpZipLib\Core\IScanFilter.cs" />
+    <Compile Include="Lib\SharpZipLib\Core\NameFilter.cs" />
+    <Compile Include="Lib\SharpZipLib\Core\PathFilter.cs" />
+    <Compile Include="Lib\SharpZipLib\Core\StreamUtils.cs" />
+    <Compile Include="Lib\SharpZipLib\Core\WindowsPathUtils.cs" />
+    <Compile Include="Lib\SharpZipLib\Encryption\PkzipClassic.cs" />
+    <Compile Include="Lib\SharpZipLib\Encryption\ZipAESStream.cs" />
+    <Compile Include="Lib\SharpZipLib\Encryption\ZipAESTransform.cs" />
+    <Compile Include="Lib\SharpZipLib\GZip\GZIPConstants.cs" />
+    <Compile Include="Lib\SharpZipLib\GZip\GZipException.cs" />
+    <Compile Include="Lib\SharpZipLib\GZip\GzipInputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\GZip\GzipOutputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\Lzw\LzwConstants.cs" />
+    <Compile Include="Lib\SharpZipLib\Lzw\LzwException.cs" />
+    <Compile Include="Lib\SharpZipLib\Lzw\LzwInputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\SharpZipBaseException.cs" />
+    <Compile Include="Lib\SharpZipLib\Tar\InvalidHeaderException.cs" />
+    <Compile Include="Lib\SharpZipLib\Tar\TarArchive.cs" />
+    <Compile Include="Lib\SharpZipLib\Tar\TarBuffer.cs" />
+    <Compile Include="Lib\SharpZipLib\Tar\TarEntry.cs" />
+    <Compile Include="Lib\SharpZipLib\Tar\TarException.cs" />
+    <Compile Include="Lib\SharpZipLib\Tar\TarHeader.cs" />
+    <Compile Include="Lib\SharpZipLib\Tar\TarInputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\Tar\TarOutputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\Deflater.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\DeflaterConstants.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\DeflaterEngine.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\DeflaterHuffman.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\DeflaterPending.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\Inflater.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\InflaterDynHeader.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\InflaterHuffmanTree.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\PendingBuffer.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\Stream\DeflaterOutputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\Stream\InflaterInputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\Stream\OutputWindow.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\Compression\Stream\StreamManipulator.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\FastZip.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\IEntryFactory.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\WindowsNameTransform.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipConstants.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipEntry.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipEntryFactory.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipException.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipExtraData.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipFile.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipHelperStream.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipInputStream.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipNameTransform.cs" />
+    <Compile Include="Lib\SharpZipLib\Zip\ZipOutputStream.cs" />
+    <Compile Include="Lib\WindowsAPI\CoreErrorHelper.cs" />
+    <Compile Include="Lib\WindowsAPI\CoreHelpers.cs" />
+    <Compile Include="Lib\WindowsAPI\CoreNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\CoreResources\LocalizedMessages.Designer.cs" />
+    <Compile Include="Lib\WindowsAPI\DefaultShellImageSizes.cs" />
+    <Compile Include="Lib\WindowsAPI\DefinitionOptions.cs" />
+    <Compile Include="Lib\WindowsAPI\FileSystemKnownFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\FolderCategory.cs" />
+    <Compile Include="Lib\WindowsAPI\FolderProperties.cs" />
+    <Compile Include="Lib\WindowsAPI\FoldersIdentifiers.cs" />
+    <Compile Include="Lib\WindowsAPI\FolderTypes.cs" />
+    <Compile Include="Lib\WindowsAPI\IconReference.cs" />
+    <Compile Include="Lib\WindowsAPI\IKnownFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\IShellProperty.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFolderHelper.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFolders.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFoldersCOMGuids.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFoldersCOMInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFolderSettings.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFoldersNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\NativePoint.cs" />
+    <Compile Include="Lib\WindowsAPI\NativeRect.cs" />
+    <Compile Include="Lib\WindowsAPI\NonFileSystemKnownFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\PropertyKey.cs" />
+    <Compile Include="Lib\WindowsAPI\PropertySystemCOMInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\PropertySystemException.cs" />
+    <Compile Include="Lib\WindowsAPI\PropertySystemNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\PropVariant.cs" />
+    <Compile Include="Lib\WindowsAPI\PropVariantNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\RedirectionCapabilities.cs" />
+    <Compile Include="Lib\WindowsAPI\Resources\LocalizedMessages.Designer.cs" />
+    <Compile Include="Lib\WindowsAPI\RetrievalOptions.cs" />
+    <Compile Include="Lib\WindowsAPI\SearchCondition.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellCOMClasses.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellCOMGuids.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellCOMInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellException.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellFile.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellFileSystemFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellFolderItems.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellHelper.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellLibrary.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellLink.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellNativeStructs.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellNonFileSystemFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellNonFileSystemItem.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellObject.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellObjectContainer.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellObjectFactory.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellObjectWatcherEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellProperties.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellProperty.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyCollection.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyDescription.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyDescriptionsCache.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyEnumType.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyFactory.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyWriter.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellSavedSearchCollection.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellSearchCollection.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellSearchConnector.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellThumbnail.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellThumbnailEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\SortColumn.cs" />
+    <Compile Include="Lib\WindowsAPI\StronglyTypedProperties.cs" />
+    <Compile Include="Lib\WindowsAPI\SystemProperties.cs" />
+    <Compile Include="Lib\WindowsAPI\TabbedThumbnailNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarCOMInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarList.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarManager.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\WindowMessage.cs" />
+    <Compile Include="Lib\WindowsAPI\WindowUtilities.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SettingsHelper.cs" />
+    <EmbeddedResource Include="FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lib\WindowsAPI\CoreResources\LocalizedMessages.resx" />
+    <EmbeddedResource Include="Lib\WindowsAPI\Resources\LocalizedMessages.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,9 +243,10 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
@@ -76,12 +258,24 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="dearchiver.ico" />
+    <Content Include="logotype_3_freetools.ico" />
+    <None Include="res\missing.png" />
+    <None Include="res\dearchiver-logo.png" />
+    <None Include="res\dearchiver-logo_opened-48px.png" />
+    <None Include="res\dearchiver-logo_opened.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ILMerge">
+      <Version>2.14.1208</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
   </Target>
   -->
 </Project>
