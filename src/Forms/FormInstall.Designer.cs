@@ -69,7 +69,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.SystemColors.Window;
             this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Location = new System.Drawing.Point(-4, 178);
+            this.groupBox1.Location = new System.Drawing.Point(-4, 175);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(10);
             this.groupBox1.Size = new System.Drawing.Size(472, 176);
@@ -80,7 +80,7 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Controls.Add(this.tabControl1);
-            this.panel1.Location = new System.Drawing.Point(4, 7);
+            this.panel1.Location = new System.Drawing.Point(4, 9);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(462, 158);
             this.panel1.TabIndex = 14;
@@ -91,7 +91,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(1, 0);
+            this.tabControl1.Location = new System.Drawing.Point(1, 11);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -217,12 +217,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Location = new System.Drawing.Point(22, 21);
+            this.richTextBox1.Location = new System.Drawing.Point(19, 16);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
             this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.richTextBox1.ShortcutsEnabled = false;
-            this.richTextBox1.Size = new System.Drawing.Size(283, 62);
+            this.richTextBox1.Size = new System.Drawing.Size(412, 73);
             this.richTextBox1.TabIndex = 13;
             this.richTextBox1.TabStop = false;
             this.richTextBox1.Text = "Portable methods:\n - Open Dearchiver.exe with a .zip-file as its first argument\n " +
@@ -233,7 +233,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(453, 131);
+            this.tabPage3.Size = new System.Drawing.Size(453, 128);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Installation";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -332,9 +332,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormInstall";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Dearchiver Installer";
             this.Load += new System.EventHandler(this.FormInstall_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormInstall_DragDrop);

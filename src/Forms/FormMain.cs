@@ -52,79 +52,88 @@ namespace Piksel.Dearchiver
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            UpdateWorkAreaControls();
-
-            var args = Environment.GetCommandLineArgs();
-            if (args.Length>1)
+            try
             {
-                var inputFile = Path.GetFullPath(args[1]);
-                if(!File.Exists(inputFile))
+                UpdateWorkAreaControls();
+
+                var args = Environment.GetCommandLineArgs();
+                if (args.Length > 1)
                 {
-                    MessageBox.Show($"Input file \"{inputFile}\" does not exist!",
-    "Dearchiver", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                    Close();
-                    return;
-                }
-                Extractor = new Extractor(this, inputFile)
-                {
-                    ButtonCallback = extracting =>
+                    var inputFile = Path.GetFullPath(args[1]);
+                    if (!File.Exists(inputFile))
                     {
-                        lFileName.Visible = extracting;
-                        lPercent.Visible = extracting;
-                        pbExtraction.Visible = extracting;
-                        bCancel.Visible = extracting;
-
-                        bConvert.Visible = !extracting;
-                        bWorkingArea.Visible = !extracting;
-                        bOpen.Visible = !extracting;
-                    },
-                    ProgressCallback = progress =>
-                    {
-                        var percent = (int)progress;
-                        pbExtraction.Value = percent;
-                        lPercent.Text = progress.ToString("F1") + "%";
-                        TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Normal, Handle);
-                        TaskbarManager.Instance.SetProgressValue(percent, 100);
-
-                    },
-                    FilenameCallback = file =>
-                    {
-                        lFileName.Text = file;
-                    },
-                    CompletionCallback = close =>
-                    {
-                        lFileName.Text = "Done!";
-
-                        if (close) Close();
+                        MessageBox.Show($"Input file \"{inputFile}\" does not exist!",
+        "Dearchiver", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        Close();
+                        return;
                     }
-                };
+                    Extractor = new Extractor(this, inputFile)
+                    {
+                        ButtonCallback = extracting =>
+                        {
+                            lFileName.Visible = extracting;
+                            lPercent.Visible = extracting;
+                            pbExtraction.Visible = extracting;
+                            bCancel.Visible = extracting;
 
-                var archiveName = Extractor.ArchiveName;
-                Text = archiveName + " - Dearchiver";
+                            bConvert.Visible = !extracting;
+                            bWorkingArea.Visible = !extracting;
+                            bOpen.Visible = !extracting;
+                        },
+                        ProgressCallback = progress =>
+                        {
+                            var percent = (int)progress;
+                            pbExtraction.Value = percent;
+                            lPercent.Text = progress.ToString("F1") + "%";
+                            TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Normal, Handle);
+                            TaskbarManager.Instance.SetProgressValue(percent, 100);
 
-                excerptLabel1.Text = Extractor.ArchivePath;
-                toolTip1.SetToolTip(statusStrip1, Extractor.ArchivePath);
-                textBox2.Text = $"{Extractor.FileCount} file(s) in {Extractor.DirCount} folder(s).";
+                        },
+                        FilenameCallback = file =>
+                        {
+                            lFileName.Text = file;
+                        },
+                        CompletionCallback = close =>
+                        {
+                            lFileName.Text = "Done!";
 
-                directoryWindow = Extractor.GetRootWindow();
+                            if (close) Close();
+                        }
+                    };
 
-                rootNode = GetTreeNode(NodeInfo.CreateRootNode(archiveName, directoryWindow.Contents));
-                directoryIconIndex = IconExtractor.GetFileIconIndex("", FileAttributes.Directory);
+                    var archiveName = Extractor.ArchiveName;
+                    Text = archiveName + " - Dearchiver";
 
-                UpdateDirectoryListing();
+                    excerptLabel1.Text = Extractor.ArchivePath;
+                    toolTip1.SetToolTip(statusStrip1, Extractor.ArchivePath);
+                    textBox2.Text = $"{Extractor.FileCount} file(s) in {Extractor.DirCount} folder(s).";
 
-                tvFiles.Nodes.Clear();
+                    directoryWindow = Extractor.GetRootWindow();
 
-                tvFiles.Nodes.Add(rootNode);
+                    rootNode = GetTreeNode(NodeInfo.CreateRootNode(archiveName, directoryWindow.Contents));
+                    directoryIconIndex = IconExtractor.GetFileIconIndex("", FileAttributes.Directory);
 
-                rootNode.Expand();
+                    UpdateDirectoryListing();
 
-                //tbInfo.AppendText(Extractor.GetDetails());
-                lvDetails.Items.Clear();
-                lvDetails.Items.AddRange(Extractor.GetDetails().Select(sa => new ListViewItem(sa)).ToArray());
+                    tvFiles.Nodes.Clear();
 
-                UpdateExtArchiver();
+                    tvFiles.Nodes.Add(rootNode);
 
+                    rootNode.Expand();
+
+                    //tbInfo.AppendText(Extractor.GetDetails());
+                    lvDetails.Items.Clear();
+                    lvDetails.Items.AddRange(Extractor.GetDetails().Select(sa => new ListViewItem(sa)).ToArray());
+
+                    UpdateExtArchiver();
+
+                }
+            }
+            catch (Exception x)
+            {
+                Visible = false;
+                MessageBox.Show(this, "Could not open archive:\n" + x.Message, "Dearchiver", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                Close();
             }
         }
 

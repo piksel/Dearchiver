@@ -1,12 +1,14 @@
 ﻿using System.IO;
 using Piksel.Dearchiver.Helpers;
 using System.Collections.Generic;
+using EntryNode = Piksel.Dearchiver.Extractor.DirectoryWindow.EntryNode;
 
 namespace Piksel.Dearchiver
 {
+
     internal sealed class NodeInfo
     {
-        public Extractor.DirectoryWindow.EntryNode Node { get; }
+        public EntryNode Node { get; }
         public int IconIndex { get; }
         public string TypeName { get; }
 
@@ -14,9 +16,9 @@ namespace Piksel.Dearchiver
         public string FileSize { get; }
         public string CompressedSize { get; }
         public string DateTime { get; }
-        public IEnumerable<Extractor.DirectoryWindow.EntryNode> ChildNodes;
+        public IEnumerable<EntryNode> ChildNodes;
 
-        private NodeInfo(Extractor.DirectoryWindow.EntryNode node, IEnumerable<Extractor.DirectoryWindow.EntryNode> childNodes, bool rootNode) {
+        private NodeInfo(EntryNode node, IEnumerable<EntryNode> childNodes, bool rootNode) {
 
             string path;
             FileAttributes attribs;
@@ -52,15 +54,15 @@ namespace Piksel.Dearchiver
             else if (node.ChildNodes != null)
                 ChildNodes = node.ChildNodes?.Values;
             else
-                ChildNodes = new Extractor.DirectoryWindow.EntryNode[0];
+                ChildNodes = new EntryNode[0];
         }
 
-        public static NodeInfo FromNode(Extractor.DirectoryWindow.EntryNode node)
+        public static NodeInfo FromNode(EntryNode node)
             => new NodeInfo(node, null, false);
 
-        internal static NodeInfo CreateRootNode(string name, IEnumerable<Extractor.DirectoryWindow.EntryNode> childNodes)
+        internal static NodeInfo CreateRootNode(string name, IEnumerable<EntryNode> childNodes)
         {
-            var rootNode = Extractor.DirectoryWindow.EntryNode.CreateRootNode(name);
+            var rootNode = EntryNode.CreateRootNode(name);
             return new NodeInfo(rootNode, childNodes, true);
         }
     }

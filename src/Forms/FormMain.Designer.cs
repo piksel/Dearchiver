@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("/file/path");
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("/file/path");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "Foo",
             "Bar"}, -1);
             this.pbExtraction = new System.Windows.Forms.ProgressBar();
@@ -60,7 +60,7 @@
             this.bOpen = new System.Windows.Forms.Button();
             this.bWorkingArea = new System.Windows.Forms.Button();
             this.bConvert = new System.Windows.Forms.Button();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.ilBottomButtons = new System.Windows.Forms.ImageList(this.components);
             this.lvFiles = new System.Windows.Forms.ListView();
             this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -68,10 +68,11 @@
             this.chSizeCompr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ilDirContLarge = new System.Windows.Forms.ImageList(this.components);
-            this.ilDirContSmall = new System.Windows.Forms.ImageList(this.components);
             this.tvFiles = new System.Windows.Forms.TreeView();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.lvDetails = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip1 = new Microsoft.Samples.TableLayoutToolStrip();
             this.tsbParentDir = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -85,9 +86,6 @@
             this.textBox2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.excerptLabel1 = new Piksel.Dearchiver.ToolStripStatusExcerptLabel();
-            this.lvDetails = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -330,12 +328,12 @@
             this.bConvert.UseVisualStyleBackColor = true;
             this.bConvert.Click += new System.EventHandler(this.bConvert_Click);
             // 
-            // imageList1
+            // ilBottomButtons
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "7ziplogo.png");
-            this.imageList1.Images.SetKeyName(1, "dearchiver-logo_opened-48px.png");
+            this.ilBottomButtons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilBottomButtons.ImageStream")));
+            this.ilBottomButtons.TransparentColor = System.Drawing.Color.Transparent;
+            this.ilBottomButtons.Images.SetKeyName(0, "7ziplogo.png");
+            this.ilBottomButtons.Images.SetKeyName(1, "dearchiver-logo_opened-48px.png");
             // 
             // lvFiles
             // 
@@ -350,12 +348,10 @@
             this.chTime,
             this.chType});
             this.lvFiles.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
-            this.lvFiles.LargeImageList = this.ilDirContLarge;
+            listViewItem1});
             this.lvFiles.Location = new System.Drawing.Point(1, 73);
             this.lvFiles.Name = "lvFiles";
             this.lvFiles.Size = new System.Drawing.Size(576, 117);
-            this.lvFiles.SmallImageList = this.ilDirContSmall;
             this.lvFiles.TabIndex = 25;
             this.lvFiles.TileSize = new System.Drawing.Size(200, 48);
             this.lvFiles.UseCompatibleStateImageBehavior = false;
@@ -396,18 +392,6 @@
             this.chType.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.chType.Width = 0;
             // 
-            // ilDirContLarge
-            // 
-            this.ilDirContLarge.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.ilDirContLarge.ImageSize = new System.Drawing.Size(48, 48);
-            this.ilDirContLarge.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // ilDirContSmall
-            // 
-            this.ilDirContSmall.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.ilDirContSmall.ImageSize = new System.Drawing.Size(16, 16);
-            this.ilDirContSmall.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // tvFiles
             // 
             this.tvFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -446,6 +430,33 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            // 
+            // lvDetails
+            // 
+            this.lvDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.lvDetails.FullRowSelect = true;
+            this.lvDetails.GridLines = true;
+            this.lvDetails.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvDetails.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem2});
+            this.lvDetails.Location = new System.Drawing.Point(-1, 193);
+            this.lvDetails.MultiSelect = false;
+            this.lvDetails.Name = "lvDetails";
+            this.lvDetails.ShowGroups = false;
+            this.lvDetails.Size = new System.Drawing.Size(579, 97);
+            this.lvDetails.TabIndex = 27;
+            this.lvDetails.UseCompatibleStateImageBehavior = false;
+            this.lvDetails.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 110;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Width = 450;
             // 
             // toolStrip1
             // 
@@ -599,37 +610,10 @@
             // 
             this.excerptLabel1.DotsOnLeft = true;
             this.excerptLabel1.Name = "excerptLabel1";
-            this.excerptLabel1.Size = new System.Drawing.Size(459, 17);
+            this.excerptLabel1.Size = new System.Drawing.Size(428, 17);
             this.excerptLabel1.Spring = true;
             this.excerptLabel1.Text = "<ArchivePath>";
             this.excerptLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lvDetails
-            // 
-            this.lvDetails.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.lvDetails.FullRowSelect = true;
-            this.lvDetails.GridLines = true;
-            this.lvDetails.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvDetails.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-            this.lvDetails.Location = new System.Drawing.Point(-1, 193);
-            this.lvDetails.MultiSelect = false;
-            this.lvDetails.Name = "lvDetails";
-            this.lvDetails.ShowGroups = false;
-            this.lvDetails.Size = new System.Drawing.Size(579, 97);
-            this.lvDetails.TabIndex = 27;
-            this.lvDetails.UseCompatibleStateImageBehavior = false;
-            this.lvDetails.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 110;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Width = 450;
             // 
             // FormMain
             // 
@@ -700,15 +684,13 @@
         private System.Windows.Forms.MaskedTextBox tbWorkAreaNum;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ImageList ilBottomButtons;
         private System.Windows.Forms.ListView lvFiles;
         private System.Windows.Forms.ColumnHeader chName;
         private System.Windows.Forms.ColumnHeader chType;
         private System.Windows.Forms.ColumnHeader chSize;
         private System.Windows.Forms.ColumnHeader chSizeCompr;
         private System.Windows.Forms.ColumnHeader chTime;
-        private System.Windows.Forms.ImageList ilDirContSmall;
-        private System.Windows.Forms.ImageList ilDirContLarge;
         private System.Windows.Forms.TreeView tvFiles;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private Microsoft.Samples.TableLayoutToolStrip toolStrip1;
