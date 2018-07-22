@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dearchiver", "Dearchiver\Dearchiver.csproj", "{7C85E707-C963-4D9F-9A74-044BE0DA6E58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dearchiver", "src\Dearchiver.csproj", "{7C85E707-C963-4D9F-9A74-044BE0DA6E58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,30 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {679B91B3-4F4B-450B-A4FD-B25103AA5290}
+	EndGlobalSection
+	GlobalSection(AutomaticVersions) = postSolution
+		UpdateAssemblyVersion = True
+		UpdateAssemblyFileVersion = True
+		UpdateAssemblyInfoVersion = True
+		ShouldCreateLogs = True
+		AssemblyVersionSettings = None.None.DateStamp.Increment
+		AssemblyFileVersionSettings = None.None.DateStamp.Increment
+		AssemblyInfoVersionSettings = None.None.DateStamp.Increment
+		UpdatePackageVersion = False
+		AssemblyInfoVersionType = SettingsVersion
+		InheritWinAppVersionFrom = None
+		UpdateAssemblyVersion.Release|Any CPU = True
+		UpdateAssemblyFileVersion.Release|Any CPU = True
+		UpdateAssemblyInfoVersion.Release|Any CPU = True
+		ShouldCreateLogs.Release|Any CPU = True
+		AssemblyVersionSettings.Release|Any CPU = None.None.DateStamp.IncrementWithResetOnIncrease
+		AssemblyFileVersionSettings.Release|Any CPU = None.None.DateStamp.IncrementWithResetOnIncrease
+		UpdatePackageVersion.Release|Any CPU = False
+		AssemblyInfoVersionSemVerSettings.Release|Any CPU = AssemblyVersion.IncrementWithAutoReset.None
+		AssemblyInfoVersionType.Release|Any CPU = SemVer1
+		InheritWinAppVersionFrom.Release|Any CPU = None
 	EndGlobalSection
 EndGlobal

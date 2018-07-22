@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7C85E707-C963-4D9F-9A74-044BE0DA6E58}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Piksel.Dearchiver</RootNamespace>
+    <AssemblyName>Dearchiver</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AssemblyVersion>1.0.17018.33</AssemblyVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>res\Dearchiver.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converters\BooleanConverterYesNo.cs" />
+    <Compile Include="Converters\DecimalConverterPercent.cs" />
+    <Compile Include="ExcerptLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Extractor.cs" />
+    <Compile Include="Forms\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormInstall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormInstall.Designer.cs">
+      <DependentUpon>FormInstall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSettings.Designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NodeInfo.cs" />
+    <Compile Include="Helpers\DisposableToken.cs" />
+    <Compile Include="Helpers\SystemImageList.cs" />
+    <Compile Include="Helpers\LinqExtensions.cs" />
+    <Compile Include="Helpers\PathEx.cs" />
+    <Compile Include="Helpers\StorageSizeFormatter.cs" />
+    <Compile Include="Helpers\UpdatableControl.cs" />
+    <Compile Include="Helpers\ZipEntryExtensions.cs" />
+    <Compile Include="Helpers\IconExtractor.cs" />
+    <Compile Include="Lib\FolderBrowserDialogEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lib\TableLayoutToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lib\WindowsAPI\CoreErrorHelper.cs" />
+    <Compile Include="Lib\WindowsAPI\CoreHelpers.cs" />
+    <Compile Include="Lib\WindowsAPI\CoreNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\CoreResources\LocalizedMessages.Designer.cs" />
+    <Compile Include="Lib\WindowsAPI\DefaultShellImageSizes.cs" />
+    <Compile Include="Lib\WindowsAPI\DefinitionOptions.cs" />
+    <Compile Include="Lib\WindowsAPI\FileSystemKnownFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\FolderCategory.cs" />
+    <Compile Include="Lib\WindowsAPI\FolderProperties.cs" />
+    <Compile Include="Lib\WindowsAPI\FoldersIdentifiers.cs" />
+    <Compile Include="Lib\WindowsAPI\FolderTypes.cs" />
+    <Compile Include="Lib\WindowsAPI\IconReference.cs" />
+    <Compile Include="Lib\WindowsAPI\IKnownFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\IShellProperty.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFolderHelper.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFolders.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFoldersCOMGuids.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFoldersCOMInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFolderSettings.cs" />
+    <Compile Include="Lib\WindowsAPI\KnownFoldersNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\NativePoint.cs" />
+    <Compile Include="Lib\WindowsAPI\NativeRect.cs" />
+    <Compile Include="Lib\WindowsAPI\NonFileSystemKnownFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\PropertyKey.cs" />
+    <Compile Include="Lib\WindowsAPI\PropertySystemCOMInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\PropertySystemException.cs" />
+    <Compile Include="Lib\WindowsAPI\PropertySystemNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\PropVariant.cs" />
+    <Compile Include="Lib\WindowsAPI\PropVariantNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\RedirectionCapabilities.cs" />
+    <Compile Include="Lib\WindowsAPI\Resources\LocalizedMessages.Designer.cs" />
+    <Compile Include="Lib\WindowsAPI\RetrievalOptions.cs" />
+    <Compile Include="Lib\WindowsAPI\SearchCondition.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellCOMClasses.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellCOMGuids.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellCOMInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellException.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellFile.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellFileSystemFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellFolderItems.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellHelper.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellLibrary.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellLink.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellNativeStructs.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellNonFileSystemFolder.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellNonFileSystemItem.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellObject.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellObjectContainer.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellObjectFactory.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellObjectWatcherEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellProperties.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellProperty.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyCollection.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyDescription.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyDescriptionsCache.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyEnumType.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyFactory.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellPropertyWriter.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellSavedSearchCollection.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellSearchCollection.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellSearchConnector.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellThumbnail.cs" />
+    <Compile Include="Lib\WindowsAPI\ShellThumbnailEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\SortColumn.cs" />
+    <Compile Include="Lib\WindowsAPI\StronglyTypedProperties.cs" />
+    <Compile Include="Lib\WindowsAPI\SystemProperties.cs" />
+    <Compile Include="Lib\WindowsAPI\TabbedThumbnailNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarCOMInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarEnums.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarInterfaces.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarList.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarManager.cs" />
+    <Compile Include="Lib\WindowsAPI\TaskbarNativeMethods.cs" />
+    <Compile Include="Lib\WindowsAPI\WindowMessage.cs" />
+    <Compile Include="Lib\WindowsAPI\WindowUtilities.cs" />
+    <Compile Include="Helpers\ControlExtensions.cs" />
+    <Compile Include="paket-files\dwmkerr\sharpshell\SharpShell\SharpShell\Interop\IMAGELISTDRAWPARAMS.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\PostExtractActions.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\SettingsHelper.cs" />
+    <EmbeddedResource Include="Forms\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormInstall.resx">
+      <DependentUpon>FormInstall.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lib\WindowsAPI\CoreResources\LocalizedMessages.resx" />
+    <EmbeddedResource Include="Lib\WindowsAPI\Resources\LocalizedMessages.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\BZip2\BZip2.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\BZip2\BZip2Constants.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\BZip2\BZip2Exception.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\BZip2\BZip2InputStream.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\BZip2\BZip2OutputStream.cs" />
+    -->
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Checksum\Adler32.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Checksum\BZip2Crc.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Checksum\Crc32.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Checksum\IChecksum.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\FileSystemScanner.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\INameTransform.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\InvalidNameException.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\IScanFilter.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\NameFilter.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\PathFilter.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\StreamUtils.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\WindowsPathUtils.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Encryption\PkzipClassic.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Encryption\ZipAESStream.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Encryption\ZipAESTransform.cs" />
+    <!--
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\GZip\GZip.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\GZip\GZipConstants.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\GZip\GZipException.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\GZip\GzipInputStream.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\GZip\GzipOutputStream.cs" />
+    -->
+    <!--
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Lzw\LzwConstants.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Lzw\LzwException.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Lzw\LzwInputStream.cs" />
+    -->
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\Exceptions\SharpZipBaseException.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\Exceptions\ValueOutOfRangeException.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Core\Exceptions\StreamDecodingException.cs" />
+    <!--
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Tar\InvalidHeaderException.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Tar\TarArchive.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Tar\TarBuffer.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Tar\TarEntry.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Tar\TarException.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Tar\TarExtendedHeaderReader.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Tar\TarHeader.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Tar\TarInputStream.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Tar\TarOutputStream.cs" />
+    -->
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\Deflater.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\DeflaterConstants.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\DeflaterEngine.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\DeflaterHuffman.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\DeflaterPending.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\Inflater.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\InflaterDynHeader.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\InflaterHuffmanTree.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\PendingBuffer.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\Streams\DeflaterOutputStream.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\Streams\InflaterInputStream.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\Streams\OutputWindow.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\Compression\Streams\StreamManipulator.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\FastZip.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\IEntryFactory.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\WindowsNameTransform.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipConstants.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipStrings.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipEntry.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipEntryFactory.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipException.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipExtraData.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipFile.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipHelperStream.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipInputStream.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipNameTransform.cs" />
+    <Compile Include="paket-files\icsharpcode\SharpZipLib\src\ICSharpCode.SharpZipLib\Zip\ZipOutputStream.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="paket-files\dwmkerr\sharpshell\SharpShell\SharpShell\Interop\IImageList.cs" />
+    <Compile Include="paket-files\dwmkerr\sharpshell\SharpShell\SharpShell\Interop\POINT.cs" />
+    <Compile Include="paket-files\dwmkerr\sharpshell\SharpShell\SharpShell\Interop\RECT.cs" />
+    <Compile Include="paket-files\dwmkerr\sharpshell\SharpShell\SharpShell\Interop\IMAGEINFO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\missing.png" />
+    <None Include="res\dearchiver-logo.png" />
+    <None Include="res\dearchiver-logo_opened-48px.png" />
+    <None Include="res\dearchiver-logo_opened.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  -->
+</Project>
