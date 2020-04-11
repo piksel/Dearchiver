@@ -35,6 +35,7 @@ namespace Piksel.Dearchiver
 
         private string outputDirectory;
         private PostExtractActions postExtractActions;
+        private string postExtractLaunchTarget;
         private Control gui;
 
         public Action<bool> ButtonCallback { get; set; }
@@ -100,9 +101,9 @@ namespace Piksel.Dearchiver
 
         }
 
-        internal void OpenOutputDirectory()
+        private void Open(string target)
         {
-            Process.Start(outputDirectory);
+            Process.Start(target);
         }
 
         private void Run()
@@ -128,10 +129,13 @@ namespace Piksel.Dearchiver
                 e.Exception.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
         }
 
-        internal void Extract(string outputDirectory, PostExtractActions postExtractActions)
+        internal void Extract(string outputDirectory, PostExtractActions postExtractActions, string launchTarget = null)
         {
             this.outputDirectory = outputDirectory;
             this.postExtractActions = postExtractActions;
+            this.postExtractLaunchTarget = !string.IsNullOrEmpty(launchTarget)
+                ? Path.Combine(outputDirectory, launchTarget.Replace('/', Path.DirectorySeparatorChar))
+                : null;
 
             UpdateButtonState(true);
             thread = new Thread(Run);
@@ -178,9 +182,11 @@ namespace Piksel.Dearchiver
                     }
 
                     if ((postExtractActions & PostExtractActions.Open) != 0)
-                        OpenOutputDirectory();
+                        Open(outputDirectory);
 
-  
+                    if ((postExtractActions & PostExtractActions.Launch) != 0)
+                        Open(postExtractLaunchTarget);
+
                     Invoke(CompletionCallback, (postExtractActions & PostExtractActions.Close) != 0);
 
                 }).Start();
@@ -297,7 +303,7 @@ namespace Piksel.Dearchiver
 
             private void UpdateSort()
             {
-                sortedEnumerator = currentNode.ChildNodes.Values.OrderByDescending(n => n.IsDirectory).ThenBy(n => n.Name).ToArray();
+                sortedEnumerator = currentNode.ChildNodes.Values.OrderByDescending(n => n.IsDirectory).ThenBy(n => n.Name);
                 path = currentNode.GetPath();
             }
 
@@ -349,6 +355,40 @@ namespace Piksel.Dearchiver
                 }
             }
 
+            public byte[] ExtractItemInCurrentPath(string name)
+            {
+                if(GetCurrentPathItemFullPath(name) is string path)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        ExtractItem(path, ms);
+                        return ms.ToArray();
+                    }
+                }
+
+                return Array.Empty<byte>();
+            }
+
+            public bool ExtractItem(string itemPath, Stream outputStream)
+            {
+                using (var zf = new ZipFile(extractor.archiveFullPath))
+                {
+                    if (zf.GetEntry(itemPath) is ZipEntry ze)
+                    {
+                        using (var dataStream = zf.GetInputStream(ze))
+                        {
+                            dataStream.CopyTo(outputStream);
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+
+            public string GetCurrentPathItemFullPath(string name) 
+                => currentNode.ChildNodes.TryGetValue(name, out EntryNode node) ? node.GetEntryPath() : null;
+
             public class EntryNode
             {
                 public string Name { get; }
@@ -359,6 +399,7 @@ namespace Piksel.Dearchiver
                 public EntryNode Parent { get; }
 
                 public static EntryNode RootNode => new EntryNode(null, true, null);
+                public static EntryNode EllipsisNode => new EntryNode("...", true, null);
                 public static EntryNode CreateRootNode(string name) => new EntryNode(name, true, null);
 
                 public DateTime DateTime { get; private set; }
@@ -418,10 +459,17 @@ namespace Piksel.Dearchiver
                     }
                 }
 
-                internal string GetPath()
+                internal string GetPath(bool includeRootSlash = true)
                 {
-                    return Parent == null ? "/" : (Parent.GetPath() + Name + "/");
+                    return Parent == null 
+                        ? (includeRootSlash ? "/" : "")
+                        : (Parent.GetPath(includeRootSlash) + Name + "/");
                 }
+
+                internal string GetEntryPath() 
+                    => Parent != null
+                        ? Parent.GetEntryPath() + Name + (IsDirectory ? "/" : "")
+                        : "";
             }
         }
     }

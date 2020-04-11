@@ -17,7 +17,11 @@ namespace Piksel.Dearchiver.Helpers
         private readonly ShellImageListSize sizeLarge;
 
         private readonly IImageList imageListSmall;
+        public IImageList Small => imageListSmall;
+
         private readonly IImageList imageListLarge;
+        public IImageList Large => imageListLarge;
+
 
         private readonly IntPtr handleSmall;
         private readonly IntPtr handleLarge;

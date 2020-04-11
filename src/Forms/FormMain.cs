@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using Piksel.Dearchiver.Helpers;
 using Piksel.Dearchiver.Settings;
+using DaveChambers.FolderBrowserDialogEx;
+using Piksel.Dearchiver.Forms;
 
 namespace Piksel.Dearchiver
 {
@@ -48,6 +50,12 @@ namespace Piksel.Dearchiver
             systemImageList.UpdateImageLists(tvFiles);
 
             //listView2.Columns[0].TextAlign = HorizontalAlignment.Right;
+
+            folderBrowserDialog = new FolderBrowserDialogEx();
+            folderBrowserDialog.ShowEditbox = true;
+            folderBrowserDialog.ShowNewFolderButton = true;
+
+            tlpActionButtons.Height = 100;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -63,10 +71,16 @@ namespace Piksel.Dearchiver
                     if (!File.Exists(inputFile))
                     {
                         MessageBox.Show($"Input file \"{inputFile}\" does not exist!",
-        "Dearchiver", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                            "Dearchiver", 
+                            MessageBoxButtons.OK, 
+                            MessageBoxIcon.Error, 
+                            MessageBoxDefaultButton.Button1);
                         Close();
                         return;
                     }
+
+                    UpdateExtArchiver();
+
                     Extractor = new Extractor(this, inputFile)
                     {
                         ButtonCallback = extracting =>
@@ -76,9 +90,7 @@ namespace Piksel.Dearchiver
                             pbExtraction.Visible = extracting;
                             bCancel.Visible = extracting;
 
-                            bConvert.Visible = !extracting;
-                            bWorkingArea.Visible = !extracting;
-                            bOpen.Visible = !extracting;
+                            tlpActionButtons.Visible = !extracting;
                         },
                         ProgressCallback = progress =>
                         {
@@ -96,6 +108,9 @@ namespace Piksel.Dearchiver
                         CompletionCallback = close =>
                         {
                             lFileName.Text = "Done!";
+                            pbExtraction.Value = pbExtraction.Maximum;
+                            lPercent.Visible = false;
+                            bCancel.Enabled = false;
 
                             if (close) Close();
                         }
@@ -105,7 +120,7 @@ namespace Piksel.Dearchiver
                     Text = archiveName + " - Dearchiver";
 
                     excerptLabel1.Text = Extractor.ArchivePath;
-                    toolTip1.SetToolTip(statusStrip1, Extractor.ArchivePath);
+                    toolTipHandler.SetToolTip(statusStrip, Extractor.ArchivePath);
                     textBox2.Text = $"{Extractor.FileCount} file(s) in {Extractor.DirCount} folder(s).";
 
                     directoryWindow = Extractor.GetRootWindow();
@@ -124,16 +139,15 @@ namespace Piksel.Dearchiver
                     //tbInfo.AppendText(Extractor.GetDetails());
                     lvDetails.Items.Clear();
                     lvDetails.Items.AddRange(Extractor.GetDetails().Select(sa => new ListViewItem(sa)).ToArray());
-
-                    UpdateExtArchiver();
-
                 }
             }
             catch (Exception x)
             {
                 Visible = false;
-                MessageBox.Show(this, "Could not open archive:\n" + x.Message, "Dearchiver", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                Close();
+                if (MessageBox.Show("Could not open archive:\n" + x.Message, "Dearchiver", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1) == DialogResult.OK)
+                {
+                    Close();
+                }
             }
         }
 
@@ -163,12 +177,20 @@ namespace Piksel.Dearchiver
             tstLocation.Text = directoryWindow.CurrentPath;
         }
 
+        const int maxChildNodes = 20;
+
         private TreeNode GetTreeNode(NodeInfo nodeInfo)
         {
             if (nodeInfo.Node.IsDirectory)
             {
+                var childNodes = (nodeInfo.ChildNodes.Count() > maxChildNodes
+                    ? nodeInfo.ChildNodes.TakeWhile((_, i) => i < maxChildNodes)
+                        .Concat(new[] { Extractor.DirectoryWindow.EntryNode.EllipsisNode })
+                    : nodeInfo.ChildNodes)
+                    .Select(NodeInfo.FromNode).Select(GetTreeNode);
+
                 return new TreeNode(nodeInfo.Name, nodeInfo.IconIndex, nodeInfo.IconIndex, 
-                    nodeInfo.ChildNodes.Select(NodeInfo.FromNode).Select(GetTreeNode).ToArray());
+                    childNodes.ToArray());
             }
             else
             {
@@ -227,7 +249,9 @@ namespace Piksel.Dearchiver
             if (string.IsNullOrEmpty(extIconFile))
                 extIconFile = extArchiverPath;
 
+
             bOpen.Image = IconExtractor.GetIcon(extIconFile, 48)?.ToBitmap() ?? Properties.Resources.missing;
+
             bOpen.Text = $"{bOpen.Tag} {extArchiverName}";
 
         }
@@ -237,6 +261,8 @@ namespace Piksel.Dearchiver
             var haveWA = !string.IsNullOrEmpty(Settings.WorkingAreaBasePath);
             if (haveWA)
             {
+                Directory.CreateDirectory(Settings.WorkingAreaBasePath);
+
                 currWaNum = 0;
                 foreach (var dir in Directory.GetDirectories(Settings.WorkingAreaBasePath))
                 {
@@ -248,7 +274,7 @@ namespace Piksel.Dearchiver
                 tbWorkAreaNum.Text = currWaNum.ToString("d3");
                 var waPath = WorkingAreaPath();
                 linkLabel1.Tag = waPath;
-                toolTip1.SetToolTip(linkLabel1, waPath);
+                toolTipHandler.SetToolTip(linkLabel1, waPath);
 
                 if (currWaNum == 0)
                 {
@@ -257,14 +283,14 @@ namespace Piksel.Dearchiver
             }
             else
             {
-                toolTip1.SetToolTip(linkLabel1, "No working area base path has been set.\nClick to set it!");
+                toolTipHandler.SetToolTip(linkLabel1, "No working area base path has been set.\nClick to set it!");
             }
 
             tbWorkAreaNum.Enabled = haveWA;
             bIncWrkArea.Enabled = haveWA;
         }
 
-        private void BeginExtraction(bool useWorkingArea = false)
+        private void BeginExtraction(bool useWorkingArea = false, string launchTarget = null)
         {
             var archiveFile = Extractor.ArchiveFile;
 
@@ -296,12 +322,24 @@ namespace Piksel.Dearchiver
 
             this.useWorkingArea = useWorkingArea;
 
-            var postActions = PostExtractActions.None;
-            if (Settings.CloseAppAfterExtract) postActions |= PostExtractActions.Close;
-            if (Settings.OpenFolderAfterExtract) postActions |= PostExtractActions.Open;
-            if (deleteAfterExtract) postActions |= PostExtractActions.Delete;
+            BeginExtraction(outDir, deleteAfterExtract, launchTarget);
+        }
 
-            Extractor.Extract(outDir, postActions);
+        private void BeginExtraction(string outDir, bool deleteAfterExtract, string launchTarget = null)
+        {
+            var postActions = PostExtractActions.None;
+            if (launchTarget != null)
+            {
+                postActions |= PostExtractActions.Launch;
+            }
+            else
+            {
+                if (Settings.CloseAppAfterExtract) postActions |= PostExtractActions.Close;
+                if (Settings.OpenFolderAfterExtract) postActions |= PostExtractActions.Open;
+                if (deleteAfterExtract) postActions |= PostExtractActions.Delete;
+            }
+
+            Extractor.Extract(outDir, postActions, launchTarget);
         }
 
         private bool WorkAreaPromptSet()
@@ -319,9 +357,11 @@ namespace Piksel.Dearchiver
                         Settings.WorkingAreaBasePath = defaultWorkAreaPath;
                         break;
                     case DialogResult.No:
-                        if (folderBrowserDialog1.ShowDialog(this) == DialogResult.OK)
+                        folderBrowserDialog.Title = "Select work area path";
+                        
+                        if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
                         {
-                            Settings.WorkingAreaBasePath = folderBrowserDialog1.SelectedPath;
+                            Settings.WorkingAreaBasePath = folderBrowserDialog.SelectedPath;
                         }
                         else
                         {
@@ -348,8 +388,14 @@ namespace Piksel.Dearchiver
         private void bWorkingArea_Click(object sender, EventArgs e) 
             => BeginExtraction(true);
 
-        private void bSettings_Click(object sender, EventArgs e) 
-            => new FormSettings().ShowDialog(this);
+        private void bSettings_Click(object sender, EventArgs e)
+        {
+            if(new FormSettings().ShowDialog(this) == DialogResult.OK)
+            {
+                UpdateWorkAreaControls();
+            }
+
+        }
 
         private void bIncWrkArea_Click(object sender, EventArgs e)
             => IncrementWorkAreaNum();
@@ -390,10 +436,13 @@ namespace Piksel.Dearchiver
             //button1.Text = listView1.View.ToString();
         }
 
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void lvFiles_MouseDoubleClick(object sender, MouseEventArgs e) => ArchiveItemDefaultAction();
+
+        private void ArchiveItemDefaultAction()
         {
             if (lvFiles.SelectedItems.Count < 1) return;
             var si = lvFiles.SelectedItems[0];
+
             var target = si.SubItems[0].Text;
             if (target == "..")
             {
@@ -401,7 +450,21 @@ namespace Piksel.Dearchiver
             }
             else
             {
-                directoryWindow.Descend(target);
+                if (si.SubItems[5].Text == "d")
+                {
+                    directoryWindow.Descend(target);
+                }
+                else
+                {
+                    var data = directoryWindow.ExtractItemInCurrentPath(target);
+                    var previewForm = new FormPreview();
+
+                    IntPtr icon = IntPtr.Zero;
+                    systemImageList.Large.GetIcon(si.ImageIndex, 0, ref icon);
+
+                    previewForm.Show(data, target, icon);
+                    return;
+                }
             }
             UpdateDirectoryListing();
         }
@@ -456,5 +519,78 @@ namespace Piksel.Dearchiver
                 UpdateDirectoryListing();
             }
         }
+
+        private void extractTonewWorkAreaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IncrementWorkAreaNum();
+            BeginExtraction(true);
+        }
+
+        private void extractTopathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog.Title = "Extract to path...";
+
+            if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                BeginExtraction(folderBrowserDialog.SelectedPath, false);
+            }
+        }
+
+        private void cmsArchiveItem_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+            if (!(lvFiles.SelectedItems.Cast<ListViewItem>().FirstOrDefault() is ListViewItem selected))
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            var isDir = selected.SubItems.Count < 6 || selected.SubItems[5].Text == "d";
+
+            tsmiPreview.Enabled = !isDir;
+            tsmiExtractAndOpen.Enabled = !isDir;
+            tsmiExtractAllAndOpen.Enabled = !isDir;
+
+        }
+
+        private void tsmiPreview_Click(object sender, EventArgs e) => ArchiveItemDefaultAction();
+
+        private void tsmiExtractAndOpen_Click(object sender, EventArgs e) 
+            => ExtractAndOpenCurrentItem(extractAll: false);
+        
+        private void tsmiExtractAllAndOpen_Click(object sender, EventArgs e)
+            => ExtractAndOpenCurrentItem(extractAll: true);
+
+        private void ExtractAndOpenCurrentItem(bool extractAll)
+        {
+            if (!(lvFiles.SelectedItems.Cast<ListViewItem>().FirstOrDefault() is ListViewItem selected && selected.SubItems.Count > 0))
+            {
+                return;
+            }
+
+            var target = selected.SubItems[0].Text;
+            if (target == "..") return;
+
+            var targetPath = directoryWindow.GetCurrentPathItemFullPath(target);
+
+            if(extractAll)
+            {
+                BeginExtraction(true, targetPath);
+            }
+            else
+            {
+                var extractFile = new FileInfo(Path.Combine(WorkingAreaPath(), target));
+                using (var fs = extractFile.Create()) 
+                {
+                    if(!directoryWindow.ExtractItem(targetPath, fs))
+                    {
+                        return;
+                    }
+                }
+
+                Process.Start(extractFile.FullName);
+            }
+        }
+
     }
 }

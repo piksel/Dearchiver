@@ -40,7 +40,7 @@
             this.bSettings = new System.Windows.Forms.Button();
             this.llCredits = new System.Windows.Forms.LinkLabel();
             this.bCancel = new System.Windows.Forms.Button();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmsSettings = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.alwaysUseNewWorkingAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.workingAreaBasePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,13 +52,15 @@
             this.setFileAssociationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.bIncWrkArea = new System.Windows.Forms.Button();
             this.tbWorkAreaNum = new System.Windows.Forms.MaskedTextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTipHandler = new System.Windows.Forms.ToolTip(this.components);
             this.bOpen = new System.Windows.Forms.Button();
             this.bWorkingArea = new System.Windows.Forms.Button();
+            this.cmsExtract = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.extractTonewWorkAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extractTopathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bConvert = new System.Windows.Forms.Button();
             this.ilBottomButtons = new System.Windows.Forms.ImageList(this.components);
             this.lvFiles = new System.Windows.Forms.ListView();
@@ -68,12 +70,17 @@
             this.chSizeCompr = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cmsArchiveItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiPreview = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmiExtractAndOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiExtractAllAndOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.tvFiles = new System.Windows.Forms.TreeView();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.lvDetails = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStrip1 = new Microsoft.Samples.TableLayoutToolStrip();
+            this.tsTop = new Microsoft.Samples.TableLayoutToolStrip();
             this.tsbParentDir = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tstLocation = new System.Windows.Forms.ToolStripTextBox();
@@ -82,16 +89,20 @@
             this.tsbDetails = new System.Windows.Forms.ToolStripButton();
             this.tsbIcons = new System.Windows.Forms.ToolStripButton();
             this.tsbArchiveInfo = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.textBox2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.excerptLabel1 = new Piksel.Dearchiver.ToolStripStatusExcerptLabel();
-            this.contextMenuStrip1.SuspendLayout();
+            this.tlpActionButtons = new System.Windows.Forms.TableLayoutPanel();
+            this.cmsSettings.SuspendLayout();
+            this.cmsExtract.SuspendLayout();
+            this.cmsArchiveItem.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.tsTop.SuspendLayout();
+            this.statusStrip.SuspendLayout();
+            this.tlpActionButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbExtraction
@@ -163,9 +174,9 @@
             this.bCancel.Visible = false;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
-            // contextMenuStrip1
+            // cmsSettings
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsSettings.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.alwaysUseNewWorkingAreaToolStripMenuItem,
             this.workingAreaBasePathToolStripMenuItem,
             this.toolStripMenuItem2,
@@ -173,8 +184,8 @@
             this.setFileAssociationsToolStripMenuItem,
             this.toolStripMenuItem1,
             this.aboutToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(229, 126);
+            this.cmsSettings.Name = "contextMenuStrip1";
+            this.cmsSettings.Size = new System.Drawing.Size(229, 126);
             // 
             // alwaysUseNewWorkingAreaToolStripMenuItem
             // 
@@ -285,44 +296,70 @@
             // 
             // bOpen
             // 
-            this.bOpen.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.bOpen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bOpen.Image = global::Piksel.Dearchiver.Properties.Resources.missing;
-            this.bOpen.Location = new System.Drawing.Point(235, 349);
+            this.bOpen.Location = new System.Drawing.Point(191, 0);
+            this.bOpen.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.bOpen.Name = "bOpen";
-            this.bOpen.Size = new System.Drawing.Size(109, 98);
+            this.bOpen.Size = new System.Drawing.Size(173, 48);
             this.bOpen.TabIndex = 3;
             this.bOpen.Tag = "&Open with";
             this.bOpen.Text = "&Open with 7zip";
             this.bOpen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolTip1.SetToolTip(this.bOpen, resources.GetString("bOpen.ToolTip"));
+            this.toolTipHandler.SetToolTip(this.bOpen, resources.GetString("bOpen.ToolTip"));
             this.bOpen.UseVisualStyleBackColor = true;
             this.bOpen.Click += new System.EventHandler(this.bOpen_Click);
             // 
             // bWorkingArea
             // 
-            this.bWorkingArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bWorkingArea.ContextMenuStrip = this.cmsExtract;
+            this.bWorkingArea.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bWorkingArea.Image = global::Piksel.Dearchiver.Properties.Resources.dearchiver_logo_opened_48px;
-            this.bWorkingArea.Location = new System.Drawing.Point(399, 349);
+            this.bWorkingArea.Location = new System.Drawing.Point(376, 0);
+            this.bWorkingArea.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
             this.bWorkingArea.Name = "bWorkingArea";
-            this.bWorkingArea.Size = new System.Drawing.Size(168, 98);
+            this.bWorkingArea.Size = new System.Drawing.Size(179, 48);
             this.bWorkingArea.TabIndex = 2;
             this.bWorkingArea.Text = "E&xtract to working area";
             this.bWorkingArea.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolTip1.SetToolTip(this.bWorkingArea, resources.GetString("bWorkingArea.ToolTip"));
+            this.toolTipHandler.SetToolTip(this.bWorkingArea, resources.GetString("bWorkingArea.ToolTip"));
             this.bWorkingArea.UseVisualStyleBackColor = true;
             this.bWorkingArea.Click += new System.EventHandler(this.bWorkingArea_Click);
             // 
+            // cmsExtract
+            // 
+            this.cmsExtract.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.extractTonewWorkAreaToolStripMenuItem,
+            this.extractTopathToolStripMenuItem});
+            this.cmsExtract.Name = "cmsExtract";
+            this.cmsExtract.Size = new System.Drawing.Size(204, 48);
+            // 
+            // extractTonewWorkAreaToolStripMenuItem
+            // 
+            this.extractTonewWorkAreaToolStripMenuItem.Name = "extractTonewWorkAreaToolStripMenuItem";
+            this.extractTonewWorkAreaToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.extractTonewWorkAreaToolStripMenuItem.Text = "Extract to &new work area";
+            this.extractTonewWorkAreaToolStripMenuItem.Click += new System.EventHandler(this.extractTonewWorkAreaToolStripMenuItem_Click);
+            // 
+            // extractTopathToolStripMenuItem
+            // 
+            this.extractTopathToolStripMenuItem.Name = "extractTopathToolStripMenuItem";
+            this.extractTopathToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.extractTopathToolStripMenuItem.Text = "Extract to &path...";
+            this.extractTopathToolStripMenuItem.Click += new System.EventHandler(this.extractTopathToolStripMenuItem_Click);
+            // 
             // bConvert
             // 
-            this.bConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.bConvert.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bConvert.Image = global::Piksel.Dearchiver.Properties.Resources.dearchiver_logo_opened_48px;
-            this.bConvert.Location = new System.Drawing.Point(12, 349);
+            this.bConvert.Location = new System.Drawing.Point(0, 0);
+            this.bConvert.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.bConvert.Name = "bConvert";
-            this.bConvert.Size = new System.Drawing.Size(168, 98);
+            this.bConvert.Size = new System.Drawing.Size(179, 48);
             this.bConvert.TabIndex = 0;
             this.bConvert.Text = "&Convert to folder";
             this.bConvert.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolTip1.SetToolTip(this.bConvert, "Extract archive contents to a folder with the same name as the archive.\r\n\r\nExampl" +
+            this.toolTipHandler.SetToolTip(this.bConvert, "Extract archive contents to a folder with the same name as the archive.\r\n\r\nExampl" +
         "e:\r\n\r\nC:\\Users\\Administrator\\Download\\Foo.zip\r\nwill be extracted to\r\nC:\\Users\\Ad" +
         "ministrator\\Download\\Foo\\");
             this.bConvert.UseVisualStyleBackColor = true;
@@ -347,6 +384,8 @@
             this.chSizeCompr,
             this.chTime,
             this.chType});
+            this.lvFiles.ContextMenuStrip = this.cmsArchiveItem;
+            this.lvFiles.HideSelection = false;
             this.lvFiles.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
             this.lvFiles.Location = new System.Drawing.Point(1, 73);
@@ -357,7 +396,7 @@
             this.lvFiles.UseCompatibleStateImageBehavior = false;
             this.lvFiles.View = System.Windows.Forms.View.Details;
             this.lvFiles.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            this.lvFiles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
+            this.lvFiles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvFiles_MouseDoubleClick);
             // 
             // chName
             // 
@@ -391,6 +430,44 @@
             this.chType.Text = "Type";
             this.chType.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.chType.Width = 0;
+            // 
+            // cmsArchiveItem
+            // 
+            this.cmsArchiveItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiPreview,
+            this.toolStripMenuItem3,
+            this.tsmiExtractAndOpen,
+            this.tsmiExtractAllAndOpen});
+            this.cmsArchiveItem.Name = "cmsArchiveItem";
+            this.cmsArchiveItem.Size = new System.Drawing.Size(179, 76);
+            this.cmsArchiveItem.Opening += new System.ComponentModel.CancelEventHandler(this.cmsArchiveItem_Opening);
+            // 
+            // tsmiPreview
+            // 
+            this.tsmiPreview.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.tsmiPreview.Name = "tsmiPreview";
+            this.tsmiPreview.Size = new System.Drawing.Size(178, 22);
+            this.tsmiPreview.Text = "Preview";
+            this.tsmiPreview.Click += new System.EventHandler(this.tsmiPreview_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(175, 6);
+            // 
+            // tsmiExtractAndOpen
+            // 
+            this.tsmiExtractAndOpen.Name = "tsmiExtractAndOpen";
+            this.tsmiExtractAndOpen.Size = new System.Drawing.Size(178, 22);
+            this.tsmiExtractAndOpen.Text = "Extract and open";
+            this.tsmiExtractAndOpen.Click += new System.EventHandler(this.tsmiExtractAndOpen_Click);
+            // 
+            // tsmiExtractAllAndOpen
+            // 
+            this.tsmiExtractAllAndOpen.Name = "tsmiExtractAllAndOpen";
+            this.tsmiExtractAllAndOpen.Size = new System.Drawing.Size(178, 22);
+            this.tsmiExtractAllAndOpen.Text = "Extract all and open";
+            this.tsmiExtractAllAndOpen.Click += new System.EventHandler(this.tsmiExtractAllAndOpen_Click);
             // 
             // tvFiles
             // 
@@ -429,7 +506,7 @@
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.tsTop);
             // 
             // lvDetails
             // 
@@ -439,6 +516,7 @@
             this.lvDetails.FullRowSelect = true;
             this.lvDetails.GridLines = true;
             this.lvDetails.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvDetails.HideSelection = false;
             this.lvDetails.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem2});
             this.lvDetails.Location = new System.Drawing.Point(-1, 193);
@@ -458,21 +536,21 @@
             // 
             this.columnHeader2.Width = 450;
             // 
-            // toolStrip1
+            // tsTop
             // 
-            this.toolStrip1.ColumnCount = 8;
-            this.toolStrip1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.toolStrip1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 6F));
-            this.toolStrip1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.toolStrip1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 6F));
-            this.toolStrip1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.toolStrip1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.toolStrip1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.toolStrip1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsTop.ColumnCount = 8;
+            this.tsTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tsTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 6F));
+            this.tsTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tsTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 6F));
+            this.tsTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tsTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tsTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tsTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tsTop.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsTop.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsTop.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.tsTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbParentDir,
             this.toolStripSeparator2,
             this.tstLocation,
@@ -481,14 +559,14 @@
             this.tsbDetails,
             this.tsbIcons,
             this.tsbArchiveInfo});
-            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table;
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RowCount = 1;
-            this.toolStrip1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.toolStrip1.Size = new System.Drawing.Size(581, 40);
-            this.toolStrip1.Stretch = true;
-            this.toolStrip1.TabIndex = 0;
+            this.tsTop.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table;
+            this.tsTop.Location = new System.Drawing.Point(0, 0);
+            this.tsTop.Name = "tsTop";
+            this.tsTop.RowCount = 1;
+            this.tsTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tsTop.Size = new System.Drawing.Size(581, 40);
+            this.tsTop.Stretch = true;
+            this.tsTop.TabIndex = 0;
             // 
             // tsbParentDir
             // 
@@ -511,9 +589,12 @@
             // tstLocation
             // 
             this.tstLocation.BackColor = System.Drawing.SystemColors.Window;
+            this.tstLocation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tstLocation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tstLocation.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tstLocation.Name = "tstLocation";
             this.tstLocation.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.tstLocation.Padding = new System.Windows.Forms.Padding(3);
             this.tstLocation.ReadOnly = true;
             this.tstLocation.Size = new System.Drawing.Size(366, 40);
             // 
@@ -582,17 +663,17 @@
             this.tsbArchiveInfo.Text = "Archive Information";
             this.tsbArchiveInfo.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.textBox2,
             this.toolStripStatusLabel1,
             this.excerptLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 503);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(579, 22);
-            this.statusStrip1.TabIndex = 28;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Location = new System.Drawing.Point(0, 503);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(579, 22);
+            this.statusStrip.TabIndex = 28;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // textBox2
             // 
@@ -610,17 +691,36 @@
             // 
             this.excerptLabel1.DotsOnLeft = true;
             this.excerptLabel1.Name = "excerptLabel1";
-            this.excerptLabel1.Size = new System.Drawing.Size(428, 17);
+            this.excerptLabel1.Size = new System.Drawing.Size(459, 17);
             this.excerptLabel1.Spring = true;
             this.excerptLabel1.Text = "<ArchivePath>";
             this.excerptLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tlpActionButtons
+            // 
+            this.tlpActionButtons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlpActionButtons.ColumnCount = 3;
+            this.tlpActionButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpActionButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpActionButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpActionButtons.Controls.Add(this.bConvert, 0, 0);
+            this.tlpActionButtons.Controls.Add(this.bOpen, 1, 0);
+            this.tlpActionButtons.Controls.Add(this.bWorkingArea, 2, 0);
+            this.tlpActionButtons.Location = new System.Drawing.Point(12, 349);
+            this.tlpActionButtons.Name = "tlpActionButtons";
+            this.tlpActionButtons.RowCount = 1;
+            this.tlpActionButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpActionButtons.Size = new System.Drawing.Size(555, 48);
+            this.tlpActionButtons.TabIndex = 29;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(579, 525);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.tlpActionButtons);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.tbWorkAreaNum);
@@ -631,9 +731,6 @@
             this.Controls.Add(this.lPercent);
             this.Controls.Add(this.lFileName);
             this.Controls.Add(this.pbExtraction);
-            this.Controls.Add(this.bOpen);
-            this.Controls.Add(this.bWorkingArea);
-            this.Controls.Add(this.bConvert);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -641,16 +738,19 @@
             this.Name = "FormMain";
             this.Text = "Dearchiver";
             this.Load += new System.EventHandler(this.FormMain_Load);
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.cmsSettings.ResumeLayout(false);
+            this.cmsExtract.ResumeLayout(false);
+            this.cmsArchiveItem.ResumeLayout(false);
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.tsTop.ResumeLayout(false);
+            this.tsTop.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
+            this.tlpActionButtons.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -667,7 +767,7 @@
         private System.Windows.Forms.Button bSettings;
         private System.Windows.Forms.LinkLabel llCredits;
         private System.Windows.Forms.Button bCancel;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip cmsSettings;
         private System.Windows.Forms.ToolStripMenuItem alwaysUseNewWorkingAreaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem workingAreaBasePathToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
@@ -679,11 +779,11 @@
         private System.Windows.Forms.ToolStripMenuItem setFileAssociationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private DaveChambers.FolderBrowserDialogEx.FolderBrowserDialogEx folderBrowserDialog;
         private System.Windows.Forms.Button bIncWrkArea;
         private System.Windows.Forms.MaskedTextBox tbWorkAreaNum;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip toolTipHandler;
         private System.Windows.Forms.ImageList ilBottomButtons;
         private System.Windows.Forms.ListView lvFiles;
         private System.Windows.Forms.ColumnHeader chName;
@@ -693,7 +793,7 @@
         private System.Windows.Forms.ColumnHeader chTime;
         private System.Windows.Forms.TreeView tvFiles;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-        private Microsoft.Samples.TableLayoutToolStrip toolStrip1;
+        private Microsoft.Samples.TableLayoutToolStrip tsTop;
         private System.Windows.Forms.ToolStripButton tsbTree;
         private System.Windows.Forms.ToolStripButton tsbDetails;
         private System.Windows.Forms.ToolStripButton tsbIcons;
@@ -701,7 +801,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripTextBox tstLocation;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel textBox2;
         private Piksel.Dearchiver.ToolStripStatusExcerptLabel excerptLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
@@ -710,6 +810,15 @@
         private System.Windows.Forms.ListView lvDetails;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ContextMenuStrip cmsExtract;
+        private System.Windows.Forms.ToolStripMenuItem extractTonewWorkAreaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extractTopathToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tlpActionButtons;
+        private System.Windows.Forms.ContextMenuStrip cmsArchiveItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPreview;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExtractAndOpen;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExtractAllAndOpen;
     }
 }
 
