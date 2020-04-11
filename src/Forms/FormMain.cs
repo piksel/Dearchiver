@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using Piksel.Dearchiver.Helpers;
 using Piksel.Dearchiver.Settings;
-using DaveChambers.FolderBrowserDialogEx;
+using Ionic.Utils;
 using Piksel.Dearchiver.Forms;
 
 namespace Piksel.Dearchiver
@@ -52,7 +52,10 @@ namespace Piksel.Dearchiver
             //listView2.Columns[0].TextAlign = HorizontalAlignment.Right;
 
             folderBrowserDialog = new FolderBrowserDialogEx();
-            folderBrowserDialog.ShowEditbox = true;
+            folderBrowserDialog.NewStyle = true;
+            folderBrowserDialog.ShowFullPathInEditBox = true;
+            
+            folderBrowserDialog.ShowEditBox = true;
             folderBrowserDialog.ShowNewFolderButton = true;
 
             tlpActionButtons.Height = 100;
@@ -357,7 +360,15 @@ namespace Piksel.Dearchiver
                         Settings.WorkingAreaBasePath = defaultWorkAreaPath;
                         break;
                     case DialogResult.No:
-                        folderBrowserDialog.Title = "Select work area path";
+                        var fbd = new FolderBrowserDialogEx
+                        {
+                            NewStyle = true,
+                            ShowFullPathInEditBox = true,
+
+                            ShowEditBox = true,
+                            ShowNewFolderButton = true,
+                            Description = "Select work area path"
+                        };
                         
                         if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
                         {
@@ -528,11 +539,19 @@ namespace Piksel.Dearchiver
 
         private void extractTopathToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog.Title = "Extract to path...";
-
-            if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
+            var fbd = new FolderBrowserDialogEx
             {
-                BeginExtraction(folderBrowserDialog.SelectedPath, false);
+                NewStyle = true,
+                ShowFullPathInEditBox = true,
+
+                ShowEditBox = true,
+                ShowNewFolderButton = true,
+                Description = "Extract to path..."
+            };
+
+            if (fbd.ShowDialog(this) == DialogResult.OK)
+            {
+                BeginExtraction(fbd.SelectedPath, false);
             }
         }
 

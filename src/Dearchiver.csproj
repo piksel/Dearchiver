@@ -340,12 +340,6 @@
     <None Include="res\dearchiver-logo_opened.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\lib\FolderBrowserDialogEx\FolderBrowserDialogEx.csproj">
-      <Project>{5d3558c1-05f1-464e-9466-ef66df48c251}</Project>
-      <Name>FolderBrowserDialogEx</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>

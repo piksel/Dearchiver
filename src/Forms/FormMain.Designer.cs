@@ -779,7 +779,7 @@
         private System.Windows.Forms.ToolStripMenuItem setFileAssociationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private DaveChambers.FolderBrowserDialogEx.FolderBrowserDialogEx folderBrowserDialog;
+        private Ionic.Utils.FolderBrowserDialogEx folderBrowserDialog;
         private System.Windows.Forms.Button bIncWrkArea;
         private System.Windows.Forms.MaskedTextBox tbWorkAreaNum;
         private System.Windows.Forms.LinkLabel linkLabel1;
