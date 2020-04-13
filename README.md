@@ -5,4 +5,4 @@
 
 Simple windows tool for easier extraction of archives.
 
-![Screenshot](https://github.com/piksel/Dearchiver/raw/master/docs/screenshot.png)
+![Screenshot](https://github.com/piksel/Dearchiver/raw/master/docs/screenshot-v1.4_2.png)
