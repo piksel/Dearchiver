@@ -246,3 +246,4 @@ WindowsAPICodePack
 Dearchiver/paket-files/
 *.zip
 src/paket-files/
+dist
