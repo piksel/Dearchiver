@@ -18,6 +18,13 @@ namespace Piksel.Dearchiver.Forms
 
             tabControl1.Top = -30;
             Height = 360;
+
+#if !PORTABLE_APP
+            tabControl1.SelectTab(1);
+            rtbUsage.Lines[0] = "Usage:";
+            Text = lTitle.Text = "Dearchiver";
+            llBackToInstall.Visible = false;
+#endif
         }
 
         private void FormInstall_DragOver(object sender, DragEventArgs e)

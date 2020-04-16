@@ -70,7 +70,7 @@ namespace Piksel.Dearchiver
                 var args = Environment.GetCommandLineArgs();
                 if (args.Length > 1)
                 {
-                    var inputFile = Path.GetFullPath(args[1]);
+                    var inputFile = Path.GetFullPath(string.Join(" ", args.Skip(1)));
                     if (!File.Exists(inputFile))
                     {
                         MessageBox.Show($"Input file \"{inputFile}\" does not exist!",

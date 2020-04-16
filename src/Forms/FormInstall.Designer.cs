@@ -40,12 +40,12 @@
             this.bInstall = new System.Windows.Forms.Button();
             this.tbInstallPath = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.llBackToInstall = new System.Windows.Forms.LinkLabel();
             this.bOpenArchive = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.rtbUsage = new System.Windows.Forms.RichTextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lTitle = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbDropAccepted = new System.Windows.Forms.GroupBox();
             this.pbDropMessage = new System.Windows.Forms.PictureBox();
@@ -177,9 +177,9 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.linkLabel2);
+            this.tabPage2.Controls.Add(this.llBackToInstall);
             this.tabPage2.Controls.Add(this.bOpenArchive);
-            this.tabPage2.Controls.Add(this.richTextBox1);
+            this.tabPage2.Controls.Add(this.rtbUsage);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -188,16 +188,16 @@
             this.tabPage2.Text = "Portable Usage";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // linkLabel2
+            // llBackToInstall
             // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(19, 100);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(106, 13);
-            this.linkLabel2.TabIndex = 31;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Back to installation";
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            this.llBackToInstall.AutoSize = true;
+            this.llBackToInstall.Location = new System.Drawing.Point(19, 100);
+            this.llBackToInstall.Name = "llBackToInstall";
+            this.llBackToInstall.Size = new System.Drawing.Size(105, 13);
+            this.llBackToInstall.TabIndex = 31;
+            this.llBackToInstall.TabStop = true;
+            this.llBackToInstall.Text = "Back to installation";
+            this.llBackToInstall.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // bOpenArchive
             // 
@@ -211,29 +211,30 @@
             this.bOpenArchive.UseVisualStyleBackColor = true;
             this.bOpenArchive.Click += new System.EventHandler(this.bOpenArchive_Click);
             // 
-            // richTextBox1
+            // rtbUsage
             // 
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.rtbUsage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Location = new System.Drawing.Point(19, 16);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richTextBox1.ShortcutsEnabled = false;
-            this.richTextBox1.Size = new System.Drawing.Size(412, 73);
-            this.richTextBox1.TabIndex = 13;
-            this.richTextBox1.TabStop = false;
-            this.richTextBox1.Text = "Portable methods:\n - Open Dearchiver.exe with a .zip-file as its first argument\n " +
-    "- Drop an archive onto this window\n - Click the button to the right";
+            this.rtbUsage.BackColor = System.Drawing.SystemColors.Control;
+            this.rtbUsage.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbUsage.Enabled = false;
+            this.rtbUsage.Location = new System.Drawing.Point(19, 16);
+            this.rtbUsage.Name = "rtbUsage";
+            this.rtbUsage.ReadOnly = true;
+            this.rtbUsage.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbUsage.ShortcutsEnabled = false;
+            this.rtbUsage.Size = new System.Drawing.Size(412, 73);
+            this.rtbUsage.TabIndex = 13;
+            this.rtbUsage.TabStop = false;
+            this.rtbUsage.Text = "Usage:\n - Open Dearchiver.exe with a .zip-file as its first argument\n - Drop an a" +
+    "rchive onto this window\n - Click the button to the right";
             // 
             // tabPage3
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(453, 128);
+            this.tabPage3.Size = new System.Drawing.Size(453, 131);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Installation";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -249,17 +250,17 @@
             this.pictureBox2.TabIndex = 10;
             this.pictureBox2.TabStop = false;
             // 
-            // label1
+            // lTitle
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.lTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Font = new System.Drawing.Font("Segoe UI Light", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 135);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(437, 40);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Dearchiver Installer";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lTitle.Font = new System.Drawing.Font("Segoe UI Light", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lTitle.Location = new System.Drawing.Point(12, 135);
+            this.lTitle.Name = "lTitle";
+            this.lTitle.Size = new System.Drawing.Size(437, 40);
+            this.lTitle.TabIndex = 9;
+            this.lTitle.Text = "Dearchiver Installer";
+            this.lTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // pictureBox1
             // 
@@ -329,7 +330,7 @@
             this.Controls.Add(this.gbDropAccepted);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lTitle);
             this.Controls.Add(this.pictureBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -361,7 +362,7 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lTitle;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox gbDropAccepted;
         private System.Windows.Forms.Label lDropTarget;
@@ -378,9 +379,9 @@
         private System.Windows.Forms.Button bInstall;
         private System.Windows.Forms.TextBox tbInstallPath;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.LinkLabel llBackToInstall;
         private System.Windows.Forms.Button bOpenArchive;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox rtbUsage;
         private System.Windows.Forms.TabPage tabPage3;
     }
 }

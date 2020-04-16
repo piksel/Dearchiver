@@ -47,7 +47,7 @@ namespace Piksel.Dearchiver
 
         internal static void OpenArchive(string file)
         {
-            Process.Start(Process.GetCurrentProcess().MainModule.FileName, file);
+            Process.Start(Process.GetCurrentProcess().MainModule.FileName, $"\"{file}\"");
         }
     }
 }
